@@ -1,0 +1,104 @@
+---
+title: 'MATH 437 HW5'
+author: "Drew Remmenga"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+```{r}
+library(MASS)
+set.seed(437)
+mu1=c(0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+mu2=c(3,3,3,3,3,3,3,3,3,3,3,3,3,3)
+mu3=c(-3,-3,-3,-3,-3,-3,-3,-3,-3,-3,-3,-3,-3,-3)
+v1=c(1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1)/sqrt(14)
+v2=c(-2,1,-2,1,-2,1,-2,1,-2,1,-2,1,-2,1)/6
+X16=mvrnorm(16,mu1,diag(14))
+X24=mvrnorm(24-16,mu2,v1%*%t(v1))
+X32=mvrnorm(32-24,mu3,v1%*%t(v1)+v2%*%t(v2))
+X=rbind(X16,X24,X32)
+ev=eigen(cov(X))
+y=c()
+k=c(1,2,3,4,5,6,7,8,9,10,11,12,13,14)
+values=ev$values
+for (val in k)
+{
+  x=seq(1,val)
+  y[val]=sum(values[1:val])
+}
+l=sum(ev$values)
+Y=y/l
+plot(k,Y)
+```
+It appears logarithmic.
+```{r}
+plot(X)
+set.seed(438)
+X16=mvrnorm(16,mu1,diag(14))
+X24=mvrnorm(24-16,mu2,v1%*%t(v1))
+X32=mvrnorm(32-24,mu3,v1%*%t(v1)+v2%*%t(v2))
+X=rbind(X16,X24,X32)
+ev=eigen(cov(X))
+y=c()
+k=c(1,2,3,4,5,6,7,8,9,10,11,12,13,14)
+values=ev$values
+for (val in k)
+{
+  x=seq(1,val)
+  y[val]=sum(values[1:val])
+}
+l=sum(ev$values)
+Y=y/l
+plot(k,Y)
+plot(X)
+set.seed(439)
+X16=mvrnorm(16,mu1,diag(14))
+X24=mvrnorm(24-16,mu2,v1%*%t(v1))
+X32=mvrnorm(32-24,mu3,v1%*%t(v1)+v2%*%t(v2))
+X=rbind(X16,X24,X32)
+ev=eigen(cov(X))
+y=c()
+k=c(1,2,3,4,5,6,7,8,9,10,11,12,13,14)
+values=ev$values
+for (val in k)
+{
+  x=seq(1,val)
+  y[val]=sum(values[1:val])
+}
+l=sum(ev$values)
+Y=y/l
+plot(k,Y)
+plot(X)
+```
+```{r}
+S=c(14.1,4.3,1.2,.4)
+u1=c(0.39, 0.42, 0.44, 0.69)
+u2=c(0.40, 0.39, 0.42, −0.72)
+s=u1%*%t(u1)
+s=s*14.1
+s
+u1[1]+u2[1]
+S=diag(S,nrow=4)
+u1%*%S%*%u2
+
+```
+u2=c(0.40, 0.39, 0.42, −0.72)
+```{r}
+canmed=read.table("~/School/Math437/HW5/Canmed.txt")
+canmed=canmed[1:14,1:6]
+d=dist(canmed,method="euclidean")
+d[is.na(d)]=0
+clust=hclust(d,method="complete")
+plot(clust)
+canmed=scale(as.numeric(unlist(canmed)))
+canmed[is.na(canmed)]=0
+pc = princomp(canmed)
+```
+
+```{r}
+S=matrix(data=c(1,.25,0,.25,1,.25,0,.25,1),nrow=3)
+s=eigen(S)
+s
+s$vectors%*%t(s$vectors)
+
+```
